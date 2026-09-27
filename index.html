@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Narendranath Portfolio | GIS & Spatial Works</title>
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: rgba(22, 27, 46, 0.75);
+            --card-border: rgba(99, 102, 241, 0.2);
+            --neon-blue: #38bdf8;
+            --neon-purple: #818cf8;
+            --neon-glow: rgba(56, 189, 248, 0.35);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --accent-red: #ef4444;
+            --accent-green: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(56, 189, 248, 0.15) 0%, transparent 40%);
+            min-height: 100vh;
+        }
+
+        /* 0. WELCOME PRE-ANIMATION SCREEN */
+        #welcomeScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #080c16;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .welcome-content {
+            text-align: center;
+            animation: pulseGlow 2s infinite alternate;
+        }
+
+        .welcome-icon {
+            font-size: 4rem;
+            color: var(--neon-blue);
+            margin-bottom: 20px;
+            animation: floatIcon 3s ease-in-out infinite;
+        }
+
+        .welcome-title {
+            font-size: 2.4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+            letter-spacing: 1.5px;
+        }
+
+        .welcome-subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        @keyframes pulseGlow {
+            from { filter: drop-shadow(0 0 15px rgba(56, 189, 248, 0.3)); }
+            to { filter: drop-shadow(0 0 35px rgba(129, 140, 248, 0.7)); }
+        }
+
+        /* Header & Navigation */
+        header {
+            position: sticky;
+            top: 0;
+            backdrop-filter: blur(15px);
+            background: rgba(11, 15, 25, 0.85);
+            border-bottom: 1px solid var(--card-border);
+            z-index: 1000;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.35rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        nav {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            color: var(--neon-blue);
+            background: rgba(56, 189, 248, 0.1);
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 0 15px var(--neon-glow);
+        }
+
+        .auth-status-badge {
+            font-size: 0.8rem;
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            box-shadow: 0 0 8px var(--accent-green);
+        }
+
+        /* Container & Tabs */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out forwards;
+        }
+
+        .tab-content.active-tab {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            margin-bottom: 25px;
+            border-left: 4px solid var(--neon-blue);
+            padding-left: 15px;
+        }
+
+        .section-header h2 {
+            font-size: 1.8rem;
+            color: #fff;
+            letter-spacing: 0.5px;
+        }
+
+        /* Admin Controls */
+        .admin-controls-card {
+            background: var(--card-bg);
+            border: 1px dashed var(--neon-purple);
+            border-radius: 12px;
+            padding: 22px;
+            margin-bottom: 35px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .admin-controls-card h3 {
+            color: var(--neon-purple);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.15rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-group-full {
+            grid-column: span 2;
+        }
+
+        .input-control, select, textarea {
+            width: 100%;
+            padding: 12px 14px;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #fff;
+            outline: none;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+
+        .input-control:focus, select:focus, textarea:focus {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 10px var(--neon-glow);
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            color: #fff;
+            padding: 11px 22px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 8px;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-submit:hover {
+            opacity: 0.9;
+            box-shadow: 0 0 20px var(--neon-glow);
+        }
+
+        /* Cards Layout */
+        .projects-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 45% 55%;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .project-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--neon-blue);
+            box-shadow: 0 10px 25px rgba(56, 189, 248, 0.15);
+        }
+
+        .project-img-wrapper {
+            position: relative;
+            background: #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            min-height: 280px;
+            cursor: pointer;
+        }
+
+        .project-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .project-card:hover .project-img-wrapper img {
+            transform: scale(1.04);
+        }
+
+        .img-zoom-hint {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(11, 15, 25, 0.85);
+            border: 1px solid var(--neon-blue);
+            color: var(--neon-blue);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            pointer-events: none;
+            backdrop-filter: blur(4px);
+        }
+
+        .project-details {
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .project-details h3 {
+            font-size: 1.35rem;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .project-details p {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            white-space: pre-wrap; /* Supports custom line breaks */
+        }
+
+        .card-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 12px;
+        }
+
+        .badge-tag {
+            font-size: 0.72rem;
+            font-family: 'Fira Code', monospace;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--neon-purple);
+            text-transform: uppercase;
+        }
+
+        .btn-delete {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: var(--accent-red);
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-delete:hover {
+            background: var(--accent-red);
+            color: #fff;
+        }
+
+        /* 3. VIDEO SHOWCASE UPGRADE */
+        .video-container {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 25px;
+        }
+
+        .video-thumbnail-box {
+            position: relative;
+            width: 100%;
+            height: 420px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-bottom: 20px;
+            border: 1px solid var(--card-border);
+        }
+
+        .video-thumbnail-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease, filter 0.4s ease;
+        }
+
+        .video-thumbnail-box:hover img {
+            transform: scale(1.03);
+            filter: brightness(0.85);
+        }
+
+        .video-play-overlay {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: rgba(239, 68, 68, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 2rem;
+            box-shadow: 0 0 25px rgba(239, 68, 68, 0.7);
+            transition: 0.3s transform, 0.3s background;
+        }
+
+        .video-thumbnail-box:hover .video-play-overlay {
+            transform: scale(1.15);
+            background: #ef4444;
+        }
+
+        .video-actions-bar {
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-yt-direct {
+            background: #ef4444;
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+        }
+
+        .btn-yt-direct:hover {
+            opacity: 0.9;
+            box-shadow: 0 0 25px rgba(239, 68, 68, 0.7);
+        }
+
+        /* 4. DEVELOPER SECTION (BIGGER PHOTO & PRE-WRAP BIO) */
+        .developer-grid {
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            gap: 30px;
+        }
+
+        .developer-sidebar {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 35px 25px;
+            text-align: center;
+        }
+
+        .dev-avatar {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            border: 3px solid var(--neon-blue);
+            box-shadow: 0 0 25px var(--neon-glow);
+            object-fit: cover;
+            background: #1e293b;
+            display: block;
+        }
+
+        .developer-main-info {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 30px;
+        }
+
+        .dev-bio-text {
+            color: var(--text-muted);
+            line-height: 1.9;
+            font-size: 1rem;
+            white-space: pre-wrap; /* Allows formatting, blank lines & indentation */
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: #111827;
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            width: 90%;
+            max-width: 400px;
+            padding: 25px;
+            position: relative;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        /* HIGH-POWER MAP PAN & ZOOM MODAL */
+        #mapZoomModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(5, 8, 16, 0.95);
+            backdrop-filter: blur(8px);
+            z-index: 5000;
+            flex-direction: column;
+        }
+
+        .zoom-toolbar {
+            padding: 12px 25px;
+            background: rgba(15, 23, 42, 0.9);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .zoom-toolbar-buttons {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .zoom-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--card-border);
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: 0.2s;
+        }
+
+        .zoom-btn:hover {
+            background: var(--neon-blue);
+            color: #000;
+        }
+
+        .zoom-viewport {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: grab;
+            user-select: none;
+        }
+
+        .zoom-viewport:active {
+            cursor: grabbing;
+        }
+
+        #zoomedMapImg {
+            max-width: 90%;
+            max-height: 90%;
+            transition: transform 0.05s linear;
+            transform-origin: center center;
+        }
+
+        @media (max-width: 768px) {
+            .project-card { grid-template-columns: 1fr; }
+            .form-grid { grid-template-columns: 1fr; }
+            .form-group-full { grid-column: span 1; }
+            .developer-grid { grid-template-columns: 1fr; }
+            header { flex-direction: column; gap: 15px; }
+            .video-thumbnail-box { height: 240px; }
+        }
+    </style>
+</head>
+<body>
+<!-- PRE-ANIMATION WELCOME SCREEN -->
+    <div id="welcomeScreen">
+        <div class="welcome-content">
+            <i class="fa-solid fa-earth-americas welcome-icon"></i>
+            <h1 class="welcome-title">Welcome to Narendranath's Portfolio</h1>
+            <p class="welcome-subtitle">GIS & Spatial Analytics Hub</p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-earth-americas"></i> Narendranath Portfolio
+        </div>
+        <nav>
+            <button class="nav-btn active" onclick="switchTab('regional', this)"><i class="fa-solid fa-map-location-dot"></i> Regional Works</button>
+            <button class="nav-btn" onclick="switchTab('international', this)"><i class="fa-solid fa-globe"></i> International Works</button>
+            <button class="nav-btn" onclick="switchTab('video', this)"><i class="fa-solid fa-circle-play"></i> Video Showcase</button>
+            <button class="nav-btn" onclick="switchTab('developer', this)"><i class="fa-solid fa-user-astronaut"></i> About Developer</button>
+            
+            <div class="auth-status-badge">
+                <span class="status-dot" id="authDot"></span>
+                <span id="roleLabel">Viewer Mode</span>
+            </div>
+
+            <button class="nav-btn" id="loginBtn" onclick="openLoginModal()"><i class="fa-solid fa-lock"></i> Admin Login</button>
+            <button class="nav-btn" id="logoutBtn" style="display: none;" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+
+        <!-- ADMIN WORK UPLOAD PANEL -->
+        <div class="admin-controls-card" id="adminControlPanel" style="display: none;">
+            <h3><i class="fa-solid fa-plus-circle"></i> Upload Work / Map</h3>
+            <form id="projectForm" onsubmit="saveProject(event)">
+                <div class="form-grid">
+                    <div>
+                        <label style="font-size: 0.85rem; color: var(--text-muted);">Category</label>
+                        <select id="projCategory" class="input-control" required>
+                            <option value="regional">Regional Works</option>
+                            <option value="international">International Works</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="font-size: 0.85rem; color: var(--text-muted);">Project / Map Heading</label>
+                        <input type="text" id="projTitle" class="input-control" placeholder="e.g. Dwarakeswar River Basin Analysis" required>
+                    </div>
+                    <div class="form-group-full">
+                        <label style="font-size: 0.85rem; color: var(--text-muted);">Upload Image / Map File</label>
+                        <input type="file" id="projImage" class="input-control" accept="image/*" required>
+                    </div>
+                    <div class="form-group-full">
+                        <label style="font-size: 0.85rem; color: var(--text-muted);">Description (Use enter/return for spacing)</label>
+                        <textarea id="projDesc" rows="4" class="input-control" placeholder="Provide analysis notes, spatial methodology or details..." required></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn-submit" id="projSubmitBtn"><i class="fa-solid fa-cloud-arrow-up"></i> Save to Database</button>
+            </form>
+        </div>
+
+        <!-- 1. REGIONAL WORKS -->
+        <section id="regional" class="tab-content active-tab">
+            <div class="section-header">
+                <h2>Regional Works</h2>
+            </div>
+            <div class="projects-grid" id="regionalContainer">
+                <p style="color: var(--text-muted);">Loading works from cloud...</p>
+            </div>
+        </section>
+
+        <!-- 2. INTERNATIONAL WORKS -->
+        <section id="international" class="tab-content">
+            <div class="section-header">
+                <h2>International Works</h2>
+            </div>
+            <div class="projects-grid" id="internationalContainer">
+                <p style="color: var(--text-muted);">Loading works from cloud...</p>
+            </div>
+        </section>
+
+        <!-- 3. VIDEO SHOWCASE -->
+        <section id="video" class="tab-content">
+            <div class="section-header">
+                <h2>Video Showcase</h2>
+            </div>
+
+            <!-- Admin Video Update Form -->
+            <div class="admin-controls-card" id="adminVideoPanel" style="display: none;">
+                <h3><i class="fa-solid fa-video"></i> Update Video Link & Details</h3>
+                <form id="videoForm" onsubmit="saveVideo(event)">
+                    <div class="form-grid">
+                        <div class="form-group-full">
+                            <label style="font-size: 0.85rem; color: var(--text-muted);">YouTube Share Link (e.g. https://youtu.be/... or watch link)</label>
+                            <input type="text" id="videoUrlInput" class="input-control" placeholder="Paste YouTube link here..." required>
+                        </div>
+                        <div class="form-group-full">
+                            <label style="font-size: 0.85rem; color: var(--text-muted);">Custom Video Thumbnail (Optional)</label>
+                            <input type="file" id="videoThumbInput" class="input-control" accept="image/*">
+                        </div>
+                        <div class="form-group-full">
+                            <label style="font-size: 0.85rem; color: var(--text-muted);">Video Description</label>
+                            <textarea id="videoDescInput" rows="3" class="input-control" placeholder="Brief summary of the video content..." required></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-submit"><i class="fa-solid fa-save"></i> Save Video</button>
+                </form>
+            </div>
+
+            <div class="video-container">
+                <!-- Thumbnail & Direct Click -->
+                <div class="video-thumbnail-box" id="videoThumbnailContainer" onclick="openYouTubeDirect()">
+                    <img id="videoThumbImg" src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1200&q=80" alt="Video Thumbnail">
+                    <div class="video-play-overlay">
+                        <i class="fa-solid fa-play"></i>
+                    </div>
+                </div>
+
+                <div class="video-actions-bar">
+                    <a href="#" target="_blank" id="ytDirectBtn" class="btn-yt-direct">
+                        <i class="fa-brands fa-youtube"></i> Watch on YouTube
+                    </a>
+                </div>
+
+                <h3 id="videoHeading" style="margin-top: 20px; margin-bottom: 8px; color: var(--neon-blue);">Project Video Overview</h3>
+                <p id="videoDescText" style="color: var(--text-muted); line-height: 1.7; white-space: pre-wrap;"></p>
+            </div>
+        </section>
+
+        <!-- 4. ABOUT DEVELOPER -->
+        <section id="developer" class="tab-content">
+            <div class="section-header">
+                <h2>About Developer</h2>
+            </div>
+
+            <!-- Admin Profile Update Form -->
+            <div class="admin-controls-card" id="adminProfilePanel" style="display: none;">
+                <h3><i class="fa-solid fa-id-card"></i> Update Developer Profile</h3>
+                <form id="profileForm" onsubmit="saveProfile(event)">
+                    <div class="form-grid">
+                        <div>
+                            <label style="font-size: 0.85rem; color: var(--text-muted);">Developer Name</label>
+                            <input type="text" id="devNameInput" class="input-control" required>
+                        </div>
+                        <div>
+                            <label style="font-size: 0.85rem; color: var(--text-muted);">Title / Subheading</label>
+                            <input type="text" id="devTitleInput" class="input-control" required>
+                        </div>
+                        <div class="form-group-full">
+                            <label style="font-size: 0.85rem; color: var(--text-muted);">Profile Photo</label>
+                            <input type="file" id="devPhotoInput" class="input-control" accept="image/*">
+                        </div>
+                        <div class="form-group-full">
+                            <label style="font-size: 0.85rem; color: var(--text-muted);">Bio / About Text (Supports enters, paragraphs, and spacing)</label>
+                            <textarea id="devBioInput" rows="6" class="input-control" placeholder="Write your journey, background, and spatial passions freely..." required></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-submit"><i class="fa-solid fa-save"></i> Update Profile</button>
+                </form>
+            </div>
+
+            <div class="developer-grid">
+                <div class="developer-sidebar">
+                    <img id="devAvatarImg" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80" alt="Developer" class="dev-avatar">
+                    <h3 id="devNameDisplay" style="color: #fff; font-size: 1.3rem;">Narendranath</h3>
+                    <p id="devTitleDisplay" style="color: var(--neon-blue); font-size: 0.9rem; margin-top: 4px;">GIS & Spatial Analyst</p>
+                </div>
+                <div class="developer-main-info">
+                    <h3 style="color: #fff; margin-bottom: 15px; border-bottom: 1px solid var(--card-border); padding-bottom: 8px;">Biography</h3>
+                    <div id="devBioDisplay" class="dev-bio-text"></div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- FULLSCREEN HIGH-POWER PAN & ZOOM MODAL -->
+    <div id="mapZoomModal">
+        <div class="zoom-toolbar">
+            <span id="zoomTitle" style="color: var(--neon-blue); font-weight: 600;">Interactive Map Viewer</span>
+            <div class="zoom-toolbar-buttons">
+                <button class="zoom-btn" onclick="adjustZoom(-0.5)"><i class="fa-solid fa-minus"></i></button>
+                <span id="zoomLevelIndicator" style="font-size: 0.85rem; color: var(--text-muted); width: 55px; text-align: center;">1.0x</span>
+                <button class="zoom-btn" onclick="adjustZoom(0.5)"><i class="fa-solid fa-plus"></i></button>
+                <button class="zoom-btn" onclick="resetZoom()"><i class="fa-solid fa-arrows-rotate"></i> Reset</button>
+                <button class="zoom-btn" style="background: rgba(239,68,68,0.3); border-color: var(--accent-red);" onclick="closeZoomModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        </div>
+        <div class="zoom-viewport" id="zoomViewport" onwheel="handleWheelZoom(event)">
+            <img id="zoomedMapImg" src="" alt="Zoomable Map">
+        </div>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeLoginModal()"><i class="fa-solid fa-xmark"></i></button>
+            <h3 style="margin-bottom: 8px; color: #fff;"><i class="fa-solid fa-shield-halved"></i> Admin Access</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">
+                Enter admin password to upload and edit works.
+            </p>
+            <input type="password" id="adminPassword" class="input-control" placeholder="Password" style="margin-bottom: 15px;">
+            <button class="btn-submit" style="width: 100%;" onclick="attemptLogin()">Login</button>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs & Cloud Database Layer -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-analytics.js";
+        import { 
+            getFirestore, 
+            collection, 
+            addDoc, 
+            doc, 
+            setDoc, 
+            deleteDoc, 
+            onSnapshot 
+        } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCeDykcRSnmJwQgoem7GRruICwuvcas_78",
+            authDomain: "narendrapotfolio.firebaseapp.com",
+            projectId: "narendrapotfolio",
+            storageBucket: "narendrapotfolio.firebasestorage.app",
+            messagingSenderId: "664654497602",
+            appId: "1:664654497602:web:8c6dd52b289b93f1b66adb",
+            measurementId: "G-D3Y0W4QW8L"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app);
+
+        const ADMIN_PIN = "naren25";
+        let isAdminLoggedIn = false;
+        let globalProjects = [];
+        let currentRawVideoUrl = "";
+
+        // Remove Welcome animation after delay
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const screen = document.getElementById('welcomeScreen');
+                if (screen) {
+                    screen.style.opacity = '0';
+                    setTimeout(() => { screen.style.display = 'none'; }, 800);
+                }
+            }, 2500);
+        });
+
+        // Tab Navigation
+        window.switchTab = function(tabId, el) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active-tab'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+
+            const target = document.getElementById(tabId);
+            if (target) target.classList.add('active-tab');
+            if (el) el.classList.add('active');
+        };
+
+        // Render project lists with Zoom trigger
+        function renderProjects() {
+            const regContainer = document.getElementById('regionalContainer');
+            const intContainer = document.getElementById('internationalContainer');
+
+            regContainer.innerHTML = '';
+            intContainer.innerHTML = '';
+
+            const regionalList = globalProjects.filter(p => p.category === 'regional');
+            const internationalList = globalProjects.filter(p => p.category === 'international');
+
+            renderList(regionalList, regContainer);
+            renderList(internationalList, intContainer);
+        }
+
+        function renderList(list, container) {
+            if (list.length === 0) {
+                container.innerHTML = `<p style="color: var(--text-muted); font-style: italic;">No works available in this category.</p>`;
+                return;
+            }
+
+            list.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'project-card';
+                card.innerHTML = `
+                    <div class="project-img-wrapper" onclick="openZoomModal('${item.image}', '${item.title.replace(/'/g, "\\'")}')">
+                        <img src="${item.image}" alt="${item.title}">
+                        <div class="img-zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Click to Zoom (Up to 20x)</div>
+                    </div>
+                    <div class="project-details">
+                        <div>
+                            <span class="badge-tag">${item.category}</span>
+                            <h3>${item.title}</h3>
+                            <p>${item.desc}</p>
+                        </div>
+                        <div class="card-actions">
+                            <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-regular fa-calendar"></i> ${item.date}</span>
+                            ${isAdminLoggedIn ? `<button class="btn-delete" onclick="deleteProject('${item.id}')"><i class="fa-solid fa-trash"></i> Delete</button>` : ''}
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Real-time listener for Projects
+        function listenProjects() {
+            const q = collection(db, "projects");
+            onSnapshot(q, (snapshot) => {
+                globalProjects = [];
+                snapshot.forEach((docSnapshot) => {
+                    globalProjects.push({ id: docSnapshot.id, ...docSnapshot.data() });
+                });
+                renderProjects();
+            }, (error) => {
+                console.error("Error reading projects:", error);
+            });
+        }
+
+        // Helper: Extract YouTube ID
+        function extractYouTubeID(url) {
+            if (!url) return "";
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : null;
+        }
+
+        // Open YouTube directly
+        window.openYouTubeDirect = function() {
+            if (currentRawVideoUrl) {
+                window.open(currentRawVideoUrl, '_blank');
+            } else {
+                alert("Video link not available yet!");
+            }
+        };
+
+        // Real-time listener for Video
+        function listenVideo() {
+            const docRef = doc(db, "content", "video");
+            onSnapshot(docRef, (docSnap) => {
+                if (docSnap.exists()) {
+                    const videoData = docSnap.data();
+                    currentRawVideoUrl = videoData.url || "";
+                    
+                    document.getElementById('videoDescText').textContent = videoData.desc || "";
+                    document.getElementById('videoUrlInput').value = videoData.url || "";
+                    document.getElementById('videoDescInput').value = videoData.desc || "";
+
+                    const directBtn = document.getElementById('ytDirectBtn');
+                    directBtn.href = currentRawVideoUrl || "#";
+
+                    const thumbImg = document.getElementById('videoThumbImg');
+                    if (videoData.thumbnail) {
+                        thumbImg.src = videoData.thumbnail;
+                    } else {
+                        const ytId = extractYouTubeID(currentRawVideoUrl);
+                        if (ytId) {
+                            thumbImg.src = `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`;
+                        }
+                    }
+                }
+            });
+        }
+
+        // Real-time listener for Profile
+        function listenProfile() {
+            const docRef = doc(db, "content", "profile");
+            onSnapshot(docRef, (docSnap) => {
+                if (docSnap.exists()) {
+                    const profile = docSnap.data();
+                    if (profile.avatar) document.getElementById('devAvatarImg').src = profile.avatar;
+                    document.getElementById('devNameDisplay').textContent = profile.name || "Narendranath";
+                    document.getElementById('devTitleDisplay').textContent = profile.title || "GIS & Spatial Analyst";
+                    document.getElementById('devBioDisplay').textContent = profile.bio || "";
+
+                    document.getElementById('devNameInput').value = profile.name || "";
+                    document.getElementById('devTitleInput').value = profile.title || "";
+                    document.getElementById('devBioInput').value = profile.bio || "";
+                }
+            });
+        }
+// Save Project to Firestore
+        window.saveProject = async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('projSubmitBtn');
+            const category = document.getElementById('projCategory').value;
+            const title = document.getElementById('projTitle').value;
+            const desc = document.getElementById('projDesc').value;
+            const fileInput = document.getElementById('projImage');
+
+            if (fileInput.files && fileInput.files[0]) {
+                btn.disabled = true;
+                btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Saving...`;
+
+                const reader = new FileReader();
+                reader.onload = async function(event) {
+                    const base64Image = event.target.result;
+                    try {
+                        await addDoc(collection(db, "projects"), {
+                            category,
+                            title,
+                            desc,
+                            image: base64Image,
+                            date: new Date().toLocaleDateString(),
+                            timestamp: Date.now()
+                        });
+                        document.getElementById('projectForm').reset();
+                        alert("Work uploaded to cloud database successfully!");
+                    } catch (err) {
+                        alert("Error saving: " + err.message);
+                    } finally {
+                        btn.disabled = false;
+                        btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> Save to Database`;
+                    }
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        };
+
+        // Save Video to Firestore
+        window.saveVideo = async function(e) {
+            e.preventDefault();
+            const url = document.getElementById('videoUrlInput').value;
+            const desc = document.getElementById('videoDescInput').value;
+            const thumbInput = document.getElementById('videoThumbInput');
+
+            try {
+                let data = { url, desc };
+                if (thumbInput.files && thumbInput.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = async function(event) {
+                        data.thumbnail = event.target.result;
+                        await setDoc(doc(db, "content", "video"), data, { merge: true });
+                        alert("Video & Custom Thumbnail saved successfully!");
+                    };
+                    reader.readAsDataURL(thumbInput.files[0]);
+                } else {
+                    await setDoc(doc(db, "content", "video"), data, { merge: true });
+                    alert("Video details saved to database!");
+                }
+            } catch (err) {
+                alert("Error saving video: " + err.message);
+            }
+        };
+
+        // Save Profile to Firestore
+        window.saveProfile = async function(e) {
+            e.preventDefault();
+            const name = document.getElementById('devNameInput').value;
+            const title = document.getElementById('devTitleInput').value;
+            const bio = document.getElementById('devBioInput').value;
+            const fileInput = document.getElementById('devPhotoInput');
+
+            try {
+                let dataToUpdate = { name, title, bio };
+                if (fileInput.files && fileInput.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = async function(event) {
+                        dataToUpdate.avatar = event.target.result;
+                        await setDoc(doc(db, "content", "profile"), dataToUpdate, { merge: true });
+                        alert("Profile updated in cloud database!");
+                    };
+                    reader.readAsDataURL(fileInput.files[0]);
+                } else {
+                    await setDoc(doc(db, "content", "profile"), dataToUpdate, { merge: true });
+                    alert("Profile details updated in cloud database!");
+                }
+            } catch (err) {
+                alert("Error updating profile: " + err.message);
+            }
+        };
+
+        // Delete Project
+        window.deleteProject = async function(docId) {
+            if (confirm("Delete this work from Cloud Database?")) {
+                try {
+                    await deleteDoc(doc(db, "projects", docId));
+                    alert("Project deleted successfully!");
+                } catch (err) {
+                    alert("Error deleting: " + err.message);
+                }
+            }
+        };
+
+        // Authentication Handlers
+        window.openLoginModal = function() {
+            document.getElementById('loginModal').style.display = 'flex';
+        };
+
+        window.closeLoginModal = function() {
+            document.getElementById('loginModal').style.display = 'none';
+            document.getElementById('adminPassword').value = '';
+        };
+
+        window.attemptLogin = function() {
+            const pass = document.getElementById('adminPassword').value;
+            if (pass === ADMIN_PIN) {
+                isAdminLoggedIn = true;
+                updateAuthUI();
+                closeLoginModal();
+                alert("Logged in as Admin.");
+            } else {
+                alert("Incorrect password!");
+            }
+        };
+
+        window.logout = function() {
+            isAdminLoggedIn = false;
+            updateAuthUI();
+            alert("Switched to Viewer Mode.");
+        };
+
+        function updateAuthUI() {
+            const adminControlPanel = document.getElementById('adminControlPanel');
+            const adminVideoPanel = document.getElementById('adminVideoPanel');
+            const adminProfilePanel = document.getElementById('adminProfilePanel');
+            const loginBtn = document.getElementById('loginBtn');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const roleLabel = document.getElementById('roleLabel');
+            const authDot = document.getElementById('authDot');
+
+            if (isAdminLoggedIn) {
+                adminControlPanel.style.display = 'block';
+                adminVideoPanel.style.display = 'block';
+                adminProfilePanel.style.display = 'block';
+                loginBtn.style.display = 'none';
+                logoutBtn.style.display = 'flex';
+                roleLabel.textContent = "Admin Mode";
+                roleLabel.style.color = "var(--neon-blue)";
+                authDot.style.background = "var(--neon-blue)";
+            } else {
+                adminControlPanel.style.display = 'none';
+                adminVideoPanel.style.display = 'none';
+                adminProfilePanel.style.display = 'none';
+                loginBtn.style.display = 'flex';
+                logoutBtn.style.display = 'none';
+                roleLabel.textContent = "Viewer Mode";
+                roleLabel.style.color = "var(--text-muted)";
+                authDot.style.background = "var(--accent-green)";
+            }
+            renderProjects();
+        }
+
+        // ================= PAN & ZOOM ENGINE (UP TO 20X) =================
+        let currentZoom = 1;
+        let isPanning = false;
+        let startX = 0, startY = 0;
+        let translateX = 0, translateY = 0;
+
+        window.openZoomModal = function(src, title) {
+            const modal = document.getElementById('mapZoomModal');
+            const img = document.getElementById('zoomedMapImg');
+            document.getElementById('zoomTitle').textContent = title || "Interactive Map Viewer";
+            img.src = src;
+            resetZoom();
+            modal.style.display = 'flex';
+        };
+
+        window.closeZoomModal = function() {
+            document.getElementById('mapZoomModal').style.display = 'none';
+            resetZoom();
+        };
+
+        window.adjustZoom = function(delta) {
+            currentZoom = Math.min(Math.max(1, currentZoom + delta), 20); // Up to 20x zoom
+            updateTransform();
+        };
+
+        window.resetZoom = function() {
+            currentZoom = 1;
+            translateX = 0;
+            translateY = 0;
+            updateTransform();
+        };
+
+        window.handleWheelZoom = function(e) {
+            e.preventDefault();
+            const delta = e.deltaY < 0 ? 0.3 : -0.3;
+            currentZoom = Math.min(Math.max(1, currentZoom + delta), 20);
+            updateTransform();
+        };
+
+        function updateTransform() {
+            const img = document.getElementById('zoomedMapImg');
+            img.style.transform = `translate(${translateX}px, ${translateY}px) scale(${currentZoom})`;
+            document.getElementById('zoomLevelIndicator').textContent = currentZoom.toFixed(1) + 'x';
+        }
+
+        const viewport = document.getElementById('zoomViewport');
+        viewport.addEventListener('mousedown', (e) => {
+            if (currentZoom <= 1) return;
+            isPanning = true;
+            startX = e.clientX - translateX;
+            startY = e.clientY - translateY;
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isPanning) return;
+            translateX = e.clientX - startX;
+            translateY = e.clientY - startY;
+            updateTransform();
+        });
+
+        window.addEventListener('mouseup', () => {
+            isPanning = false;
+        });
+
+        // Initialize Listeners
+        window.addEventListener('DOMContentLoaded', () => {
+            listenProjects();
+            listenVideo();
+            listenProfile();
+        });
+    </script>
+</body>
+</html>
